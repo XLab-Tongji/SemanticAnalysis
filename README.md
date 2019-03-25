@@ -1,13 +1,11 @@
-# Text and Speech
-
-## Environment
+# Environment
 
 - Python 3.67
-- MacOS
+- MacOS（以下环境配置方式均基于Mac系统，其他系统的配置方式可能会有一些不同）
 
 
 
-## Speech to Text
+# Speech to Text
 
 使用了Python的语音识别库 [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)
 
@@ -15,9 +13,9 @@
 
 
 
-### Installation
+## Installation
 
-#### SpeechRecognition
+### SpeechRecognition
 
 ```python
 pip install SpeechRecognition
@@ -25,7 +23,7 @@ pip install SpeechRecognition
 
 
 
-#### PyAudio
+### PyAudio
 
 使用麦克风进行输入
 
@@ -47,7 +45,7 @@ Reference: https://stackoverflow.com/questions/33851379/pyaudio-installation-on-
 
 
 
-#### PocketSphinx
+### PocketSphinx
 
 [CMU Sphinx](https://cmusphinx.github.io/) 是卡内基梅隆大学开发的开源语音识别引擎，可以离线工作，支持多种语言（包括中文）。
 
@@ -65,7 +63,7 @@ pip install PocketSphinx
 
 
 
-##### 添加中文语言包
+#### 添加中文语言包
 
 查看 `SpeechRecognition` 包的安装路径（`'/path'`）：
 
@@ -77,11 +75,11 @@ python -c "import speech_recognition as sr, os.path as p; print(p.dirname(sr.__f
 
 
 
-### Usage
+## Usage
 
-#### 获取音频
+### 获取音频
 
-##### 从音频文件
+#### 从音频文件
 
 ```python
 AUDIO_FILE = "chinese.flac"
@@ -91,7 +89,7 @@ with sr.AudioFile(AUDIO_FILE) as source:
 
 
 
-##### 从麦克风
+#### 从麦克风
 
 ```python
 # 从麦克风获取音频
@@ -136,9 +134,7 @@ def speech_to_text():
 
 
 
-
-
-## Text to Speech
+# Text to Speech
 
 使用了Python的文字转语音库 [pyttsx3](https://pypi.org/project/pyttsx3/)
 
@@ -148,7 +144,7 @@ def speech_to_text():
 
 
 
-### Installation
+## Installation
 
 ```python
 pip install pyttsx3
@@ -157,7 +153,7 @@ pip install pyobjc # 依赖模块
 
 
 
-### Usage
+## Usage
 
 ```python
 import pyttsx3
