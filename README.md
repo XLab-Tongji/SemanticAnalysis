@@ -101,7 +101,7 @@ with sr.Microphone() as source:
 
 
 
-#### 把音频写入文件
+### 把音频写入文件
 
 ```python
 # 写入 .wav
@@ -113,7 +113,7 @@ with open("speech.wav", "wb") as f:
 
 
 
-#### 语音转文字
+### 语音转文字
 
 ```python
 import speech_recognition as sr
