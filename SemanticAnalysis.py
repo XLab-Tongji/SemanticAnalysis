@@ -2,6 +2,7 @@ from configparser import ConfigParser
 from classifiers.classifier import Classifier
 from classifiers.c1 import C1
 from classifiers.c2 import C2
+from TextSpeech import text_to_speech
 
 class SemanticAnalysis:
     # state set
@@ -16,6 +17,8 @@ class SemanticAnalysis:
 
         introduction = self._response_from_config("welcome", "introduction")
         print(introduction)
+        # 转换成语音
+        text_to_speech(introduction)
 
     def get_response(self, sentence):
         classifiers = []
