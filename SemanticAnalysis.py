@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+<<<<<<< HEAD
 
 from classifiers.S1_success import S1_Success
 from classifiers.S2_success import S2_Success
@@ -8,6 +9,12 @@ from classifiers.decline import Decline
 from classifiers.repeat import Repeat
 from classifiers.unidentified import Unidentified
 from classifiers.busy import C_busy
+=======
+from classifiers.classifier import Classifier
+from classifiers.c1 import C1
+from classifiers.c2 import C2
+from TextSpeech import text_to_speech
+>>>>>>> [Add] Add speech-to-text and text-to-speech function
 
 class SemanticAnalysis:
     # state set
@@ -30,6 +37,8 @@ class SemanticAnalysis:
 
         introduction = self._response_from_config("welcome", "prologue")
         print(introduction)
+        # 转换成语音
+        text_to_speech(introduction)
 
     def get_response(self, sentence):
         classifiers = []
