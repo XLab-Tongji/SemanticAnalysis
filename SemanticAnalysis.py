@@ -13,7 +13,7 @@ class SemanticAnalysis:
     INITIAL = 0
     INTRODUCTION = 1
     END = 2
-    CFG
+    cUnidentified = C_unidentified()
 
     def __init__(self):
         self.state = SemanticAnalysis.INITIAL
@@ -30,7 +30,7 @@ class SemanticAnalysis:
             classifiers.append(C_chat_company())
             classifiers.append(C_repeat())
             classifiers.append(C_decline())
-            classifiers.append(C_unidentified())
+            classifiers.append(self.cUnidentified)
 
         if self.state == SemanticAnalysis.INTRODUCTION:
             classifiers.clear()
@@ -73,5 +73,8 @@ class SemanticAnalysis:
     def _write_to_config(self,sentence):
         try:
             self.cfgParser['repeat']['lastSentence'] = sentence
+            if sentence != self.cfgParser['unidentified']['once']:
+                if sentence != self.cfgParser['unidentified']['twice']:
+                    self.cUnidentified.times = 0
         finally:
             return

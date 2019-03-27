@@ -1,25 +1,27 @@
 # may be a unidentified classifier
 from .classifier import Classifier
-from SemanticAnalysis import SemanticAnalysis
 from configparser import ConfigParser
 
 class C_unidentified(Classifier):
     def __init__(self):
-        a = SemanticAnalysis.INITIAL
-        self.cfgParser = ConfigParser()
-        self.cfgParser.read("intention.cfg", encoding="UTF8")
+        self.times = 0
         self.classified = True
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):
-        sentence = self.cfgParser['repeat']['lastSentence']
-        print(sentence)
-        print(self.cfgParser['unidentified']['once'])
-        ###由于此处打开的cfg文件与ai的cfg不是同一个对象，故无法通过查询上一条输出判断是否进行第二、第三次未识别的回应
-        if sentence == self.cfgParser['unidentified']['once']:
+        self.times += 1
+        if self.times == 2:
             return True, "unidentified", "twice"
         else:
-            if sentence == self.cfgParser['unidentified']['twice']:
-                return True, "decline", "unidentified"
+            if self.times == 3:
+                return True, "end", "unidentified"
         return True, "unidentified", "once"
 
+    def doClassification(self,sentence):
+        for word in self.wordsList:
+            if word in sentence:
+                self.classified = True
+                break
+        if self.times == 2:
+            self.nextState = 2
+        return self.nextState
