@@ -1,13 +1,13 @@
 from configparser import ConfigParser
 
-from classifiers.c_1_success import C_1_success
-from classifiers.c_2_success import C_2_success
+from classifiers.S1_success import S1_Success
+from classifiers.S2_success import S2_Success
 
-from classifiers.c_chat_company import C_chat_company
-from classifiers.c_decline import C_decline
-from classifiers.c_repeat import C_repeat
-from classifiers.c_unidentified import C_unidentified
-from classifiers.c_busy import C_busy
+from classifiers.chatting import Chatting
+from classifiers.decline import Decline
+from classifiers.repeat import Repeat
+from classifiers.unidentified import Unidentified
+from classifiers.busy import C_busy
 
 class SemanticAnalysis:
     # state set
@@ -22,10 +22,10 @@ class SemanticAnalysis:
         self.cfgParser.read("intention.cfg", encoding="UTF8")
 
         # classifiers initial
-        self.cUnidentified = C_unidentified()
-        self.cChat = C_chat_company()
-        self.cDecline = C_decline()
-        self.cRepeat = C_repeat()
+        self.cUnidentified = Unidentified()
+        self.cChat = Chatting()
+        self.cDecline = Decline()
+        self.cRepeat = Repeat()
         self.cBusy = C_busy()
 
         introduction = self._response_from_config("welcome", "prologue")
@@ -34,38 +34,36 @@ class SemanticAnalysis:
     def get_response(self, sentence):
         classifiers = []
         if self.state == SemanticAnalysis.INITIAL:
-            classifiers.append(C_1_success())
+            classifiers.append(S1_Success())
             classifiers.append(self.cChat)
             classifiers.append(self.cRepeat)
             classifiers.append(self.cDecline)
             classifiers.append(self.cUnidentified)
-
-        if self.state == SemanticAnalysis.INTRODUCTION:
-            classifiers.clear()
-            classifiers.append(C_2_success())
+        elif self.state == SemanticAnalysis.INTRODUCTION:
+            classifiers.append(S2_Success())
             classifiers.append(self.cChat)
             classifiers.append(self.cRepeat)
             classifiers.append(self.cDecline)
             classifiers.append(self.cUnidentified)
 
         cfg_needed = False
-        intention, subintention = None, None
+        intention, sub_intention = None, None
 
         for classifier in classifiers:
             # do classification...
-            nextState = classifier.doClassification(sentence)
+            next_state = classifier.do_classification(sentence)
 
             if classifier.is_classified():
-                cfg_needed, intention, subintention = classifier.get_intention()
+                cfg_needed, intention, sub_intention = classifier.get_intention()
 
-                # 状态转换：INSTALL->INTRUDUCTION->END
-                if nextState != SemanticAnalysis.UNCHANGED:
-                    self.state = nextState
+                # 状态转换：INSTALL->INTRODUCTION->END
+                if next_state != SemanticAnalysis.UNCHANGED:
+                    self.state = next_state
                 break
 
         ret = None
         if cfg_needed:
-            ret = self._response_from_config(intention, subintention)
+            ret = self._response_from_config(intention, sub_intention)
             self._write_to_config(ret)
         return ret
 
@@ -79,11 +77,11 @@ class SemanticAnalysis:
         except KeyError:
             print("\nERROR! : Missing configuration for {} and {}\n".format(intention, subintention))
 
-    def _write_to_config(self,sentence):
+    def _write_to_config(self, sentence):
         try:
             self.cfgParser['repeat']['lastSentence'] = sentence
 
-            #未识别情况计数器
+            # 未识别情况计数器
             if sentence != self.cfgParser['unidentified']['once']:
                 if sentence != self.cfgParser['unidentified']['twice']:
                     self.cUnidentified.times = 0
