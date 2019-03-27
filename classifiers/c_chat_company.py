@@ -8,4 +8,5 @@ class C_chat_company(Classifier):
         self.wordsList = ['公司', '哪家']
 
     def get_intention(self):
+        self.classified = False
         return True, "normalQuestion" , "yourcompany?"

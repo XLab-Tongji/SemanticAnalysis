@@ -9,4 +9,5 @@ class C_2_success(Classifier):
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):
+        self.classified = False
         return True, "end", "success"

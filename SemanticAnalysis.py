@@ -16,17 +16,17 @@ class SemanticAnalysis:
     INTRODUCTION = 1
     END = 2
 
-    #classifiers initial
-    cUnidentified = C_unidentified()
-    cChat = C_chat_company()
-    cDecline = C_decline()
-    cRepeat = C_repeat()
-    cBusy = C_busy()
-
     def __init__(self):
         self.state = SemanticAnalysis.INITIAL
         self.cfgParser = ConfigParser()
         self.cfgParser.read("intention.cfg", encoding="UTF8")
+
+        # classifiers initial
+        self.cUnidentified = C_unidentified()
+        self.cChat = C_chat_company()
+        self.cDecline = C_decline()
+        self.cRepeat = C_repeat()
+        self.cBusy = C_busy()
 
         introduction = self._response_from_config("welcome", "prologue")
         print(introduction)
