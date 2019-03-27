@@ -3,6 +3,7 @@ from .classifier import Classifier
 from configparser import ConfigParser
 
 class C_unidentified(Classifier):
+
     def __init__(self):
         self.times = 0
         self.classified = True

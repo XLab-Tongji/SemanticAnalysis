@@ -1,9 +1,16 @@
 class Classifier:
     wordsList = []
-    nextState = 0
+
+    INITIAL = 0
+    INTRODUCTION = 1
+    END = 2
+    UNCHANGED = -1
+
+    nextState = UNCHANGED
 
     def __init__(self):
         self.classified = False
+        self.nextState = self.UNCHANGED
         return
 
     def is_classified(self):

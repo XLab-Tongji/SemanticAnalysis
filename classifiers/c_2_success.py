@@ -2,11 +2,10 @@
 from .classifier import Classifier
 
 class C_2_success(Classifier):
-    wordsList = ['好','嗯','可以']
-    nextState = 2
-
     def __init__(self):
         self.classified = False
+        self.wordsList = ['好','嗯','可以']
+        self.nextState = self.END
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):
