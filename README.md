@@ -9,7 +9,7 @@
 
 SpeechRecognition封装了录音、写入音频文件、录音在用户停止说话后自动停止的功能，但在自动停止录音的判断上不太灵敏。
 
-但我自己写的录音还不如它…...所以还是直接用了它来录音了…...
+但我自己写的录音还不如它…...所以还是直接用它来录音了…...
 
 
 
@@ -159,65 +159,6 @@ python -c "import speech_recognition as sr, os.path as p; print(p.dirname(sr.__f
 
 
 
-### Implement
-
-#### 获取音频
-
-##### 从音频文件
-
-```python
-AUDIO_FILE = "chinese.flac"
-with sr.AudioFile(AUDIO_FILE) as source:
-    audio = r.record(source)
-```
-
-
-
-##### 从麦克风
-
-```python
-# 从麦克风获取音频
-with sr.Microphone() as source:
-    # 校准环境噪声水平的energy threshold
-    r.adjust_for_ambient_noise(source)
-    audio = r.listen(source)
-```
-
-
-
-#### 把音频写入文件
-
-```python
-# 写入 .wav
-with open("speech.wav", "wb") as f:
-    f.write(audio.get_wav_data())
-
-# 写入 .flac .aiff .raw 等同理
-```
-
-
-
-#### 语音转文字
-
-```python
-import speech_recognition as sr
-
-r = sr.Recognizer()
-
-def speech_to_text():
-    # CMU Sphinx
-    try:
-      	# languageType: 语种（中文：zh-CN，英文en-US）
-        # audio: 音频
-        return r.recognize_sphinx(audio, language = languageType)
-    except sr.UnknownValueError:
-        print("Could not understand")
-    except sr.RequestError as e:
-        print("Sphinx error; {0}".format(e))
-```
-
-
-
 ### Usage
 
 #### 语音转文字
@@ -255,19 +196,6 @@ record()
 ```python
 pip install pyttsx3
 pip install pyobjc # 依赖模块
-```
-
-
-
-## Implement
-
-```python
-import pyttsx3
-
-def text_to_speech(Sentence):
-    engine = pyttsx3.init()
-    engine.say(Sentence)
-    engine.runAndWait()
 ```
 
 
