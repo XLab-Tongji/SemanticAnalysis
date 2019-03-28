@@ -7,15 +7,99 @@
 
 # Speech to Text
 
+SpeechRecognition封装了录音、写入音频文件、录音在用户停止说话后自动停止的功能，但在自动停止录音的判断上不太灵敏。
+
+但我自己写的录音还不如它…...所以还是直接用了它来录音了…...
+
+
+
+## 百度(在线)
+
+在 https://cloud.baidu.com/product/speech 申请API。
+
+文档：http://ai.baidu.com/docs#/ASR-API
+
+
+
+### Configuration
+
+安装Python包：
+
+```python
+pip install baidu-aip
+```
+
+Import：
+
+```python
+from aip import AipSpeech
+```
+
+填入APPID、API_KEY、SECRET_KEY：
+
+```python
+APP_ID = ""
+API_KEY = ""
+SECRET_KEY = ""
+```
+
+(也可以直接使用REST API：[demo](https://github.com/Baidu-AIP/speech-demo)
+
+
+
+### Usage
+
+```python
+from TextSpeech import speech_to_text_baidu
+speech_to_text_baidu()
+```
+
+
+
+## 科大讯飞(在线)
+
+在 https://www.xfyun.cn/services/voicedictation 申请API。
+
+文档：https://doc.xfyun.cn/rest_api/index.html
+
+
+
+### Configuration
+
+把APPID、API_KEY填到这里：
+
+```python
+URL = "http://api.xfyun.cn/v1/service/v1/iat"
+APPID = ""
+API_KEY = ""
+```
+
+要在讯飞管理面板中添加调用方api，否则会报错。
+
+
+
+### Usage
+
+```python
+from TextSpeech import speech_to_text_ifly
+speech_to_text_ifly()
+```
+
+
+
+
+
+## SpeechRecognition
+
 使用了Python的语音识别库 [SpeechRecognition](https://pypi.org/project/SpeechRecognition/)
 
 源码：https://github.com/Uberi/speech_recognition
 
 
 
-## Installation
+### Configuration
 
-### SpeechRecognition
+#### SpeechRecognition
 
 ```python
 pip install SpeechRecognition
@@ -23,7 +107,7 @@ pip install SpeechRecognition
 
 
 
-### PyAudio
+#### PyAudio
 
 使用麦克风进行输入
 
@@ -45,7 +129,7 @@ Reference: https://stackoverflow.com/questions/33851379/pyaudio-installation-on-
 
 
 
-### PocketSphinx
+#### PocketSphinx
 
 [CMU Sphinx](https://cmusphinx.github.io/) 是卡内基梅隆大学开发的开源语音识别引擎，可以离线工作，支持多种语言（包括中文）。
 
@@ -63,7 +147,7 @@ pip install PocketSphinx
 
 
 
-#### 添加中文语言包
+**添加中文语言包：**
 
 查看 `SpeechRecognition` 包的安装路径（`'/path'`）：
 
@@ -75,11 +159,11 @@ python -c "import speech_recognition as sr, os.path as p; print(p.dirname(sr.__f
 
 
 
-## Usage
+### Implement
 
-### 获取音频
+#### 获取音频
 
-#### 从音频文件
+##### 从音频文件
 
 ```python
 AUDIO_FILE = "chinese.flac"
@@ -89,7 +173,7 @@ with sr.AudioFile(AUDIO_FILE) as source:
 
 
 
-#### 从麦克风
+##### 从麦克风
 
 ```python
 # 从麦克风获取音频
@@ -101,7 +185,7 @@ with sr.Microphone() as source:
 
 
 
-### 把音频写入文件
+#### 把音频写入文件
 
 ```python
 # 写入 .wav
@@ -113,7 +197,7 @@ with open("speech.wav", "wb") as f:
 
 
 
-### 语音转文字
+#### 语音转文字
 
 ```python
 import speech_recognition as sr
@@ -134,6 +218,28 @@ def speech_to_text():
 
 
 
+### Usage
+
+#### 语音转文字
+
+```python
+from TextSpeech import speech_to_text_cmu
+speech_to_text_cmu()
+```
+
+
+
+#### 录音并写入文件
+
+```python
+from TextSpeech import record
+record()
+```
+
+
+
+
+
 # Text to Speech
 
 使用了Python的文字转语音库 [pyttsx3](https://pypi.org/project/pyttsx3/)
@@ -144,7 +250,7 @@ def speech_to_text():
 
 
 
-## Installation
+## Configuration
 
 ```python
 pip install pyttsx3
@@ -153,7 +259,7 @@ pip install pyobjc # 依赖模块
 
 
 
-## Usage
+## Implement
 
 ```python
 import pyttsx3
@@ -163,3 +269,13 @@ def text_to_speech(Sentence):
     engine.say(Sentence)
     engine.runAndWait()
 ```
+
+
+
+## Usage
+
+```python
+from TextSpeech import text_to_speech
+text_to_speech()
+```
+
