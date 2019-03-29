@@ -1,14 +1,16 @@
-from input import get_input
-from SemanticAnalysis import SemanticAnalysis
-from TextSpeech import text_to_speech
+import warnings
+warnings.filterwarnings("ignore", category=RuntimeWarning)
 
-ai = SemanticAnalysis()
-sentence = get_input()
+from input import get_input
+from AI.SemanticAnalysis import SemanticAnalysis
+from config import Config
+
+config = Config()
+ai = SemanticAnalysis(config)
+sentence = get_input(config.INPUT)
 while sentence:
-    response = ai.get_response(sentence)
-    print(response)
-    # 转换成语音
-    text_to_speech(response)
+    print("客户： " + sentence)
+    ai.get_response(sentence)
     if ai.is_end():
         break
-    sentence = get_input()
+    sentence = get_input(config.INPUT)

@@ -1,16 +1,16 @@
 class Classifier:
-    wordsList = []
+    words_list = []
 
     INITIAL = 0
     INTRODUCTION = 1
     END = 2
     UNCHANGED = -1
 
-    nextState = UNCHANGED
+    next_state = UNCHANGED
 
     def __init__(self):
         self.classified = False
-        self.nextState = self.UNCHANGED
+        self.next_state = self.UNCHANGED
         return
 
     def is_classified(self):
@@ -19,9 +19,9 @@ class Classifier:
     def get_intention(self):
         raise NotImplementedError
 
-    def doClassification(self,sentence):
-        for word in self.wordsList:
+    def do_classification(self, sentence):
+        for word in self.words_list:
             if word in sentence:
                 self.classified = True
                 break
-        return self.nextState
+        return self.next_state

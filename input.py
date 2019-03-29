@@ -1,9 +1,14 @@
-from TextSpeech import speech_to_text_baidu
+from AI.TextSpeech import speech_to_text_baidu
 
-def get_input():
-    print("---- please say something and type enter ----")
+def get_input(method):
+    print("---- please say something ----")
+    if method == "voice":
+        return _input_from_voice()
+    elif method == "command":
+        return _input_from_command()
+
+def _input_from_voice():
     return speech_to_text_baidu()
-    #return _input_from_command()
 
 def _input_from_command():
     return input()

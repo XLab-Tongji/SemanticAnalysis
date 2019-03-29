@@ -2,8 +2,7 @@
 from .classifier import Classifier
 from configparser import ConfigParser
 
-class C_unidentified(Classifier):
-
+class Unidentified(Classifier):
     def __init__(self):
         self.times = 0
         self.classified = True
@@ -18,11 +17,11 @@ class C_unidentified(Classifier):
                 return True, "end", "unidentified"
         return True, "unidentified", "once"
 
-    def doClassification(self,sentence):
-        for word in self.wordsList:
+    def do_classification(self, sentence):
+        for word in self.words_list:
             if word in sentence:
                 self.classified = True
                 break
         if self.times == 2:
-            self.nextState = 2
-        return self.nextState
+            self.next_state = 2
+        return self.next_state
