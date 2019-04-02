@@ -1,4 +1,4 @@
-AI/speech_tmp/
+AI/speech_tmp/*
 !AI/speech_tmp/.gitkeep
 AI/Classifiers/models/.vector_cache
 AI/Classifiers/models/embeddings/
