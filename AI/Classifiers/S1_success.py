@@ -6,6 +6,7 @@ class S1Success(Classifier):
         self.classified = False
         self.next_state = self.INTRODUCTION
         self.words_list = ['嗯',
+                           '行',
                            '有',
                            '要',
                            '需要',

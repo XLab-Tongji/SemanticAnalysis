@@ -4,6 +4,10 @@ warnings.filterwarnings("ignore", category=RuntimeWarning)
 from input import get_input
 from AI.SemanticAnalysis import SemanticAnalysis
 from config import Config
+import jieba
+import logging
+jieba.setLogLevel(logging.INFO)
+jieba.initialize()
 
 config = Config()
 ai = SemanticAnalysis(config)

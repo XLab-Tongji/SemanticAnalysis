@@ -7,6 +7,7 @@ class SemanticAnalysis:
     # state set
     UNCHANGED = -1
     INITIAL = 0
+    QUERIED = 0.5
     INTRODUCTION = 1
     END = 2
 
@@ -16,6 +17,7 @@ class SemanticAnalysis:
         self.cfg_parser.read(path.join(path.dirname(path.abspath(__file__)), "intention.cfg"), encoding="UTF8")
 
         # classifiers initial
+        self.c_query = Query(config)
         self.c_unidentified = Unidentified()
         self.c_chat = Chatting()
         self.c_decline = Decline()
@@ -36,6 +38,13 @@ class SemanticAnalysis:
     def get_response(self, sentence):
         classifiers = []
         if self.state == SemanticAnalysis.INITIAL:
+            classifiers.append(self.c_query)
+            classifiers.append(S1Success())
+            classifiers.append(self.c_chat)
+            classifiers.append(self.c_repeat)
+            classifiers.append(self.c_decline)
+            classifiers.append(self.c_unidentified)
+        elif self.state == SemanticAnalysis.QUERIED:
             classifiers.append(S1Success())
             classifiers.append(self.c_chat)
             classifiers.append(self.c_repeat)
@@ -58,11 +67,12 @@ class SemanticAnalysis:
             if classifier.is_classified():
                 cfg_needed, intention, sub_intention = classifier.get_intention()
 
-                # 状态转换：INSTALL->INTRODUCTION->END
+                # 状态转换：INITIAL->(QUERIED->)INTRODUCTION->END
                 if next_state != SemanticAnalysis.UNCHANGED:
                     self.state = next_state
                 break
 
+        print("current state: {}".format(self.state))
         response = None
         if cfg_needed:
             response = self._response_from_config(intention, sub_intention)

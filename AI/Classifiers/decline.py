@@ -6,6 +6,7 @@ class Decline(Classifier):
         self.classified = False
         self.next_state = self.END
         self.words_list = ['不用',
+                           '不需要',
                            '你们烦死了',
                            '不感兴趣',
                            '没兴趣',

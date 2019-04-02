@@ -1,10 +1,11 @@
 class Classifier:
     words_list = []
 
+    UNCHANGED = -1
     INITIAL = 0
+    QUERIED = 0.5
     INTRODUCTION = 1
     END = 2
-    UNCHANGED = -1
 
     next_state = UNCHANGED
 
