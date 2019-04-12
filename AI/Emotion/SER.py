@@ -1,9 +1,9 @@
 import numpy as np
 
-from Utilities import get_feature
-from Utilities import get_feature_svm
-from Utilities import load_model
-from Utilities import Radar
+from .Utilities import get_feature
+from .Utilities import get_feature_svm
+from .Utilities import load_model
+from .Utilities import Radar
 
 DATA_PATH = 'DataSet/Berlin'
 CLASS_LABELS = ("Angry", "Happy", "Neutral", "Sad")

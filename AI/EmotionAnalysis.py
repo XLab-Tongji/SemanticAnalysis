@@ -1,6 +1,6 @@
 import os.path as path
-from Emotion.SER import load, test
-from Emotion.Train import train
+from .Emotion.SER import load, test
+from .Emotion.Train import train
 
 FILE_PATH = path.join(
     path.dirname(path.abspath(__file__)), "speech_tmp/speech.wav")
