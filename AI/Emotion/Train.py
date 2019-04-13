@@ -38,7 +38,7 @@ def train_LSTM():
     y_test_train = np_utils.to_categorical(y_test)
 
     print(
-        '-------------------------------- LSTM Start --------------------------------'
+        '-------------------------------- LSTM Train Start --------------------------------'
     )
     model = LSTM_Model(input_shape=x_train[0].shape, num_classes=NUM_LABELS)
     model.train(x_train, y_train, x_test, y_test_train, n_epochs=50)
@@ -46,7 +46,7 @@ def train_LSTM():
     model.save_model("LSTM")
 
     print(
-        '--------------------------------- LSTM End ---------------------------------'
+        '--------------------------------- LSTM Train End ---------------------------------'
     )
 
 
@@ -64,14 +64,14 @@ def train_CNN():
     x_test = x_test.reshape(x_test.shape[0], in_shape[0], in_shape[1], 1)
 
     print(
-        '-------------------------------- CNN Start --------------------------------'
+        '-------------------------------- CNN Train Start --------------------------------'
     )
     model = CNN_Model(input_shape=x_train[0].shape, num_classes=NUM_LABELS)
     model.train(x_train, y_train, x_test, y_test_train, n_epochs=1)
     model.evaluate(x_test, y_test)
     model.save_model("CNN")
     print(
-        '-------------------------------- CNN End --------------------------------'
+        '-------------------------------- CNN Train End --------------------------------'
     )
 
 
@@ -83,14 +83,14 @@ def train_MLP():
         DATA_PATH, class_labels=CLASS_LABELS, flatten=FLATTEN, _svm=SVM)
     model = MLP_Model()  # 要用的方法（SVM / MLP）
     print(
-        '-------------------------------- MLP Start --------------------------------'
+        '-------------------------------- MLP Train Start --------------------------------'
     )
     model.train(x_train, y_train)
     model.evaluate(x_test, y_test)
     model.save_model("MLP")
 
     print(
-        '---------------------------------- MLP End ----------------------------------'
+        '---------------------------------- MLP Train End ----------------------------------'
     )
 
 
@@ -106,10 +106,10 @@ def train_SVM():
         _svm=SVM)
     model = SVM_Model()
     print(
-        '-------------------------------- SVM Start --------------------------------'
+        '-------------------------------- SVM Train Start --------------------------------'
     )
     model.train(x_train, y_train)
     model.save_model("SVM")
     print(
-        '---------------------------------- SVM End ----------------------------------'
+        '---------------------------------- SVM Train End ----------------------------------'
     )
