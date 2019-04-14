@@ -1,11 +1,11 @@
 from keras.utils import np_utils
 
-from DNN_Model import LSTM_Model
-from ML_Model import SVM_Model
-from ML_Model import MLP_Model
-from DNN_Model import CNN_Model
+from .DNN_Model import LSTM_Model
+from .ML_Model import SVM_Model
+from .ML_Model import MLP_Model
+from .DNN_Model import CNN_Model
 
-from Utilities import get_data
+from .Utilities import get_data
 
 DATA_PATH = 'DataSet/Berlin'
 CLASS_LABELS = ("Angry", "Happy", "Neutral", "Sad")

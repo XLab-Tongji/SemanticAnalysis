@@ -4,7 +4,7 @@ import sys
 import numpy
 from sklearn.neural_network import MLPClassifier
 from sklearn.svm import SVC
-from Common_Model import Common_Model
+from .Common_Model import Common_Model
 
 
 class MLModel(Common_Model):
@@ -39,7 +39,7 @@ class MLModel(Common_Model):
 
     输入:
         sample: 要预测的样本
-    '''    
+    '''
     def recognize_one(self, sample):
         # 没有训练和加载过模型
         if not self.trained:

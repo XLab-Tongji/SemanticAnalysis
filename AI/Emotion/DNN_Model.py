@@ -1,11 +1,12 @@
 # CNN & LSTM
 import sys
+import os
 import numpy as np
-import keras
 from keras import Sequential
 from keras.layers import LSTM as KERAS_LSTM, Dense, Dropout, Conv2D, Flatten, BatchNormalization, Activation, MaxPooling2D
 from keras.layers import Conv1D, MaxPooling1D
-from Common_Model import Common_Model
+from .Common_Model import Common_Model
+
 
 # class CNN 和 class LSTM 继承了此类（实现了make_model方法）
 class DNN_Model(Common_Model):
@@ -124,4 +125,4 @@ class LSTM_Model(DNN_Model):
         self.model.add(Dropout(0.5))
         self.model.add(Dense(32, activation='relu'))
         self.model.add(Dense(16, activation='tanh'))
-        
+

@@ -9,3 +9,7 @@ pip install git+https://github.com/Baidu-AIP/python-sdk.git@master
 pip install pyaudio
 
 pip install pydub
+
+pip install librosa
+
+pip install speechpy

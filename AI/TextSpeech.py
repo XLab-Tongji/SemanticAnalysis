@@ -16,7 +16,7 @@ def _record():
     with sr.Microphone() as source:
         # 校准环境噪声水平的energy threshold
         r.adjust_for_ambient_noise(source, duration=1)
-        audio = r.listen(source, timeout=3, phrase_time_limit=2)
+        audio = r.listen(source, timeout=None, phrase_time_limit=2)
 
     file_name = path.join(path.dirname(path.abspath(__file__)), "speech_tmp/speech.wav")
     with open(file_name, "wb") as f:

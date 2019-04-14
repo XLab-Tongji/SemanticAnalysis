@@ -6,9 +6,9 @@ from .Utilities import load_model
 from .Utilities import Radar
 
 DATA_PATH = 'DataSet/Berlin'
-CLASS_LABELS = ("Angry", "Happy", "Neutral", "Sad")
+# CLASS_LABELS = ("Angry", "Happy", "Neutral", "Sad")
 
-# CLASS_LABELS = ("Angry", "Fearful", "Happy", "Neutral", "Sad", "Surprise")
+CLASS_LABELS = ("Angry", "Fearful", "Happy", "Neutral", "Sad", "Surprise")
 # CLASS_LABELS = ("angry", "fear", "happy", "neutral", "sad", "surprise")
 
 
@@ -43,8 +43,7 @@ def LSTM(file_path: str, get_radar=False, model=None):
     NUM_LABELS = len(CLASS_LABELS)
     result = np.argmax(model.predict(np.array([get_feature(file_path)])))
     result_prob = model.predict(np.array([get_feature(file_path)]))[0]
-    print('Recogntion: ', CLASS_LABELS[result])
-    print('Probability: ', result_prob)
+    _print_result(result, result_prob)
     if get_radar:
         Radar(result_prob, CLASS_LABELS, NUM_LABELS)
 
@@ -71,8 +70,7 @@ def MLP(file_path: str, get_radar=False, model=None):
     result = model.predict(np.array([get_feature(file_path, flatten=FLATTEN)]))
     result_prob = model.predict_proba(
         np.array([get_feature(file_path, flatten=FLATTEN)]))
-    print('Recogntion: ', result)
-    print('Probability: ', result_prob)
+    _print_result(result, result_prob)
     if get_radar:
         Radar(result_prob, CLASS_LABELS, NUM_LABELS)
 
@@ -85,11 +83,12 @@ def SVM(file_path: str, get_radar=False, model=None):
 
     result = model.predict(np.array([get_feature_svm(file_path, mfcc_len=48)]))
     result_prob = model.predict_proba(
-        np.array([get_feature_svm(file_path, mfcc_len=48)]))
-    print('Recogntion: ', result)
-    print('Probability: ', result_prob)
+        np.array([get_feature_svm(file_path, mfcc_len=48)]))[0]
+    _print_result(result, result_prob)
     if get_radar:
         Radar(result_prob, CLASS_LABELS, NUM_LABELS)
 
-
+def _print_result(result, result_prob):
+    print('Recogntion: ', CLASS_LABELS[result[0] - 1])
+    print('Probability: ', result_prob)
 # SVM("test.wav")

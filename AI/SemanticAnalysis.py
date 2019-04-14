@@ -1,4 +1,5 @@
 from configparser import ConfigParser
+from .EmotionAnalysis import EmotionAnalysis
 from .TextSpeech import text_to_speech
 from .Classifiers import *
 import os.path as path
@@ -30,12 +31,24 @@ class SemanticAnalysis:
         introduction = self._response_from_config("welcome", "prologue")
         self._output_response(introduction)
 
+        # emotion analysis
+        self.emotion_recognition = config.EMOTION_RECOGNItION
+        self.voice_input = config.INPUT == "voice"
+        self.emotion = EmotionAnalysis(config)
+
+
     def _output_response(self, response):
         print("客服: " + response)
         if self.READ_RESPONSE:
             text_to_speech(response)
 
+    def _get_emotion(self):
+        self.emotion.analysis()
+
     def get_response(self, sentence):
+        if self.voice_input and self.emotion_recognition:
+            self._get_emotion()
+
         classifiers = []
         if self.state == SemanticAnalysis.INITIAL:
             classifiers.append(self.c_query)

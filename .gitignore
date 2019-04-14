@@ -4,6 +4,8 @@ AI/Classifiers/models/.vector_cache
 AI/Classifiers/models/embeddings/
 AI/Classifiers/models/*.csv
 AI/Classifiers/models/*.pt
+AI/Emotion/Models/*
+!AI/Emotion/Models/.gitkeep
 
 # Byte-compiled / optimized / DLL files
 .idea/
@@ -38,7 +40,6 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
-Models/
 
 # PyInstaller
 #  Usually these files are written by a python script from a template

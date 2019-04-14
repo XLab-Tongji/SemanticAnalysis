@@ -1,6 +1,6 @@
 class Config:
     READ_RESPONSE = False
-    INPUT = "command"  # voice, command
+    INPUT = "voice"  # voice, command
 
     USE_MODEL = True
     PRETRAINED = True
@@ -8,6 +8,7 @@ class Config:
     CUDA = False
     DEVICE = 0
 
+    EMOTION_RECOGNItION = True
     EMOTION_MODEL = "SVM"  # SVM, CNN, LSTM, MLP
-    GET_RADAR = False  # False, True
-    TRAIN = False  # False, True
+    GET_RADAR = True
+    TRAIN = False

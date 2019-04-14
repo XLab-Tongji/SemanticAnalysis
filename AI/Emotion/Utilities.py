@@ -1,6 +1,7 @@
 # 从给定文件夹读取数据和提取MFCC特征
 
 import os
+import os.path as path
 import sys
 from typing import Tuple
 import numpy as np
@@ -42,7 +43,7 @@ def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
         pad_rem = pad_len % 2
         pad_len //= 2
         signal = np.pad(signal, (pad_len, pad_len + pad_rem), 'constant', constant_values = 0)
-    
+
     # 否则把它切开
     else:
         pad_len = s_len - mean_signal_length
@@ -136,12 +137,14 @@ load_model_dnn():
     model: 加载好的模型
 '''
 def load_model(model_name: str, load_model: str):
-    
+
     if load_model == 'DNN':
         # 加载json
-        model_path = 'Models/' + model_name + '.h5'
-        model_json_path = 'Models/' + model_name + '.json'
-        
+        model_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.h5')
+        model_json_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.json')
+        # model_path = 'Models/' + model_name + '.h5'
+        # model_json_path = 'Models/' + model_name + '.json'
+
         json_file = open(model_json_path, 'r')
         loaded_model_json = json_file.read()
         json_file.close()
@@ -149,9 +152,10 @@ def load_model(model_name: str, load_model: str):
 
         # 加载权重
         model.load_weights(model_path)
-    
+
     elif load_model == 'ML':
-        model_path = 'Models/' + model_name + '.m'
+        model_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.m')
+        # model_path = 'Models/' + model_name + '.m'
         model = joblib.load(model_path)
 
     return model
