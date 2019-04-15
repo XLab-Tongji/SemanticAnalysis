@@ -1,8 +1,10 @@
 # may be a repetition classifier
 from .classifier import Classifier
+from .models.load import predict, load_data, load_model
 
 class Decline(Classifier):
-    def __init__(self):
+    def __init__(self, config):
+        self.config = config
         self.classified = False
         self.next_state = self.END
         self.words_list = ['不用',
@@ -21,8 +23,18 @@ class Decline(Classifier):
                            '在公司',
                            '银行太远',
                            '没需求']
+        self.text_field, self.label_field = load_data(target="6", config=config)
+        self.model = load_model("FastText", "refuse_pos.pt", self.text_field, config)
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):
         self.classified = False
         return True, "end", "decline"
+
+    def do_classification(self, sentence):
+
+        if self.config.USE_MODEL:
+            self.classified = predict(self.model, self.text_field, self.label_field, sentence, self.config)
+            return self.next_state
+        else:
+            super().do_classification(sentence)

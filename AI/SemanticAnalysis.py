@@ -1,4 +1,14 @@
 from configparser import ConfigParser
+
+from AI.Classifiers.S1_success import S1Success
+from AI.Classifiers.S2_success import S2Success
+from AI.Classifiers.busy import Busy
+from AI.Classifiers.repeat import Repeat
+from AI.Classifiers.chatting import Chatting
+from AI.Classifiers.query import Query
+from AI.Classifiers.decline import Decline
+from AI.Classifiers.unidentified import Unidentified
+
 from .EmotionAnalysis import EmotionAnalysis
 from .TextSpeech import text_to_speech
 from .Classifiers import *
@@ -21,9 +31,9 @@ class SemanticAnalysis:
         self.c_query = Query(config)
         self.c_unidentified = Unidentified()
         self.c_chat = Chatting()
-        self.c_decline = Decline()
+        self.c_decline = Decline(config)
         self.c_repeat = Repeat()
-        self.c_busy = Busy()
+        self.c_busy = Busy(config)
 
         # basic config
         self.READ_RESPONSE = config.READ_RESPONSE
@@ -55,18 +65,21 @@ class SemanticAnalysis:
             classifiers.append(S1Success())
             classifiers.append(self.c_chat)
             classifiers.append(self.c_repeat)
+            classifiers.append(self.c_busy)
             classifiers.append(self.c_decline)
             classifiers.append(self.c_unidentified)
         elif self.state == SemanticAnalysis.QUERIED:
             classifiers.append(S1Success())
             classifiers.append(self.c_chat)
             classifiers.append(self.c_repeat)
+            classifiers.append(self.c_busy)
             classifiers.append(self.c_decline)
             classifiers.append(self.c_unidentified)
         elif self.state == SemanticAnalysis.INTRODUCTION:
             classifiers.append(S2Success())
             classifiers.append(self.c_chat)
             classifiers.append(self.c_repeat)
+            classifiers.append(self.c_busy)
             classifiers.append(self.c_decline)
             classifiers.append(self.c_unidentified)
 
@@ -76,7 +89,6 @@ class SemanticAnalysis:
         for classifier in classifiers:
             # do classification...
             next_state = classifier.do_classification(sentence)
-
             if classifier.is_classified():
                 cfg_needed, intention, sub_intention = classifier.get_intention()
 
