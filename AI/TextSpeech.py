@@ -1,16 +1,13 @@
-import speech_recognition as sr
-import requests
 import time
 import hashlib
 import base64
 import json
-import pyttsx3
-from aip import AipSpeech
-from pydub import AudioSegment
 import os.path as path
 
 # 从麦克风获取音频并写入文件
 def _record():
+    import speech_recognition as sr
+
     # 定义SpeechRecognition对象
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -25,11 +22,14 @@ def _record():
 
 # load speech from file
 def _get_file_content(file_name):
+    from pydub import AudioSegment
     # 要转换的音频源文件
     speech = AudioSegment.from_wav(file_name).set_frame_rate(16000)
     return speech.raw_data
 
 def speech_to_text_baidu():
+    from aip import AipSpeech
+
     # https://cloud.baidu.com/product/speech 申请api
     app_id = "15879864"
     api_key = "3kvoYsDh8fGWSqdInnbcOlif"
@@ -46,6 +46,7 @@ def speech_to_text_baidu():
         return result['result'][0]
 
 def speech_to_text_cmu():
+    import speech_recognition as sr
     # 语种
     language_type = "zh-CN"
 
@@ -65,6 +66,8 @@ def speech_to_text_cmu():
         print("Sphinx error; {0}".format(e))
 
 def speech_to_text_ifly():
+    import requests
+
     url = "http://api.xfyun.cn/v1/service/v1/iat"
     app_id = "5c9c862c"
     api_key = "161f98a73874d899cab3d8a4f646a722"
@@ -108,6 +111,7 @@ def speech_to_text_ifly():
 
 
 def text_to_speech(sentence):
+    import pyttsx3
     engine = pyttsx3.init()
     engine.say(sentence)
     engine.runAndWait()

@@ -1,18 +1,10 @@
 # 从给定文件夹读取数据和提取MFCC特征
-
 import os
 import os.path as path
 import sys
 from typing import Tuple
 import numpy as np
 import scipy.io.wavfile as wav
-import librosa
-import librosa.display
-from speechpy.feature import mfcc
-from sklearn.model_selection import train_test_split
-from keras.utils import np_utils
-from keras.models import model_from_json
-from sklearn.externals import joblib
 import matplotlib.pyplot as plt
 
 mean_signal_length = 48000
@@ -29,6 +21,8 @@ get_feature(): 提取某个音频的MFCC特征向量
     numpy.ndarray: 该音频的MFCC特征向量
 """
 def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
+    import librosa
+    from speechpy.feature import mfcc
     # 某些音频用scipy.io.wavfile读会报 "Incomplete wav chunk" error
     # 似乎是因为scipy只能读pcm和float格式，而有的wav不是这两种格式...
     # fs, signal = wav.read(file_path)
@@ -58,6 +52,8 @@ def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
     return mel_coefficients
 
 def get_feature_svm(file_path: str, mfcc_len: int = 48):
+    import librosa
+    from speechpy.feature import mfcc
     y, sr = librosa.load(file_path)
 
     # 对于每一个音频文件提取其mfcc特征
@@ -95,6 +91,7 @@ get_data():
     标签数量(int)
 '''
 def get_data(data_path: str, mfcc_len: int = 39, class_labels: Tuple = ("angry", "fear", "happy", "neutral", "sad", "surprise"), flatten: bool = False, _svm: bool = False):
+    from sklearn.model_selection import train_test_split
     data = []
     labels = []
     cur_dir = os.getcwd()
@@ -137,7 +134,9 @@ load_model_dnn():
     model: 加载好的模型
 '''
 def load_model(model_name: str, load_model: str):
+    from sklearn.externals import joblib
 
+    from keras.models import model_from_json
     if load_model == 'DNN':
         # 加载json
         model_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.h5')
@@ -203,6 +202,7 @@ Waveform():
 '''
 
 def Waveform(file_path: str):
+    import librosa
     data, sampling_rate = librosa.load(file_path)
     plt.figure(figsize=(15, 5))
     librosa.display.waveplot(data, sr=sampling_rate)
