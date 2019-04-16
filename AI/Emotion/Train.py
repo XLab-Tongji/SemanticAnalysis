@@ -1,5 +1,3 @@
-from keras.utils import np_utils
-
 from .DNN_Model import LSTM_Model
 from .ML_Model import SVM_Model
 from .ML_Model import MLP_Model
@@ -28,6 +26,7 @@ def train(model_name="SVM"):
 
 
 def train_LSTM():
+    from keras.utils import np_utils
     FLATTEN = False
     NUM_LABELS = len(CLASS_LABELS)
     SVM = False
@@ -51,6 +50,7 @@ def train_LSTM():
 
 
 def train_CNN():
+    from keras.utils import np_utils
     FLATTEN = False
     NUM_LABELS = len(CLASS_LABELS)
     SVM = False
