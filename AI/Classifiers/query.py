@@ -10,7 +10,7 @@ class Query(Classifier):
         self.words_list = ['什么',
                            '再讲一遍']
         self.text_field, self.label_field = load_data(target="0", config=config)
-        self.model = load_model("FastText", "Special_Request.pt", self.text_field, config)
+        self.model = load_model("FastText", "request.pt", self.text_field, config)
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):

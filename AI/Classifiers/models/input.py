@@ -12,7 +12,7 @@ class Dataset(data.Dataset):
         self.index = -1
         flag = False
         if examples is None:
-            file_name = path.join(path.dirname(path.abspath(__file__)), "new.csv")
+            file_name = path.join(path.dirname(path.abspath(__file__)), "total.csv")
             with open(file_name, encoding="UTF8") as f:
                 examples = []
                 for line in f:

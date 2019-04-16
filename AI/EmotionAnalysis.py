@@ -8,11 +8,10 @@ FILE_PATH = path.join(
 
 class EmotionAnalysis:
     def __init__(self, config):
-        if config.EMOTION_RECOGNItION:
-            if config.TRAIN:
-                self.model = train(config.EMOTION_MODEL)
-            else:
-                self.model = load(config.EMOTION_MODEL)
+        if config.TRAIN:
+            self.model = train(config.EMOTION_MODEL)
+        else:
+            self.model = load(config.EMOTION_MODEL)
         self.model_name = config.EMOTION_MODEL
         self.get_radar = config.GET_RADAR
 

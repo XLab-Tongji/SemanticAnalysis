@@ -44,7 +44,7 @@ class SemanticAnalysis:
         # emotion analysis
         self.emotion_recognition = config.EMOTION_RECOGNItION
         self.voice_input = config.INPUT == "voice"
-        self.emotion = EmotionAnalysis(config)
+        self.emotion = EmotionAnalysis(config) if config.EMOTION_RECOGNItION else None
 
 
     def _output_response(self, response):

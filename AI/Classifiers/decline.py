@@ -24,7 +24,7 @@ class Decline(Classifier):
                            '银行太远',
                            '没需求']
         self.text_field, self.label_field = load_data(target="6", config=config)
-        self.model = load_model("FastText", "refuse_pos.pt", self.text_field, config)
+        self.model = load_model("FastText", "refuse.pt", self.text_field, config)
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):

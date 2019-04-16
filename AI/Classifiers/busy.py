@@ -15,7 +15,7 @@ class Busy(Classifier):
                            '改天打吧',
                            '换个时间打吧']
         self.text_field, self.label_field = load_data(target="5", config=config)
-        self.model = load_model("FastText", "busy_pos.pt", self.text_field, config)
+        self.model = load_model("FastText", "busy.pt", self.text_field, config)
 
     # cfg_needed, intention, sub-intention
     def get_intention(self):
