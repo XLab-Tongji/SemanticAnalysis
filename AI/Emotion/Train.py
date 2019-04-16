@@ -1,10 +1,3 @@
-from .DNN_Model import LSTM_Model
-from .ML_Model import SVM_Model
-from .ML_Model import MLP_Model
-from .DNN_Model import CNN_Model
-
-from .Utilities import get_data
-
 DATA_PATH = 'DataSet/Berlin'
 CLASS_LABELS = ("Angry", "Happy", "Neutral", "Sad")
 
@@ -27,6 +20,8 @@ def train(model_name="SVM"):
 
 def train_LSTM():
     from keras.utils import np_utils
+    from .DNN_Model import LSTM_Model
+    from .Utilities import get_data
     FLATTEN = False
     NUM_LABELS = len(CLASS_LABELS)
     SVM = False
@@ -50,7 +45,9 @@ def train_LSTM():
 
 
 def train_CNN():
+    from .DNN_Model import CNN_Model
     from keras.utils import np_utils
+    from .Utilities import get_data
     FLATTEN = False
     NUM_LABELS = len(CLASS_LABELS)
     SVM = False
@@ -76,6 +73,8 @@ def train_CNN():
 
 
 def train_MLP():
+    from .ML_Model import MLP_Model
+    from .Utilities import get_data
     FLATTEN = True
     SVM = False
 
@@ -95,6 +94,9 @@ def train_MLP():
 
 
 def train_SVM():
+    from .ML_Model import SVM_Model
+    from .Utilities import get_data
+
     FLATTEN = True
     SVM = True
 
