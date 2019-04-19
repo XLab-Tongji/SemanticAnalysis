@@ -8,7 +8,6 @@ import scipy.io.wavfile as wav
 import matplotlib.pyplot as plt
 
 mean_signal_length = 48000
-
 """
 get_feature(): 提取某个音频的MFCC特征向量
 
@@ -20,6 +19,8 @@ get_feature(): 提取某个音频的MFCC特征向量
 输出:
     numpy.ndarray: 该音频的MFCC特征向量
 """
+
+
 def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
     import librosa
     from speechpy.feature import mfcc
@@ -28,7 +29,6 @@ def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
     # fs, signal = wav.read(file_path)
     signal, fs = librosa.load(file_path)
 
-
     s_len = len(signal)
 
     # 如果音频信号小于mean_signal_length，则扩充它
@@ -36,7 +36,10 @@ def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
         pad_len = mean_signal_length - s_len
         pad_rem = pad_len % 2
         pad_len //= 2
-        signal = np.pad(signal, (pad_len, pad_len + pad_rem), 'constant', constant_values = 0)
+        signal = np.pad(
+            signal, (pad_len, pad_len + pad_rem),
+            'constant',
+            constant_values=0)
 
     # 否则把它切开
     else:
@@ -44,12 +47,13 @@ def get_feature(file_path: str, mfcc_len: int = 39, flatten: bool = False):
         pad_len //= 2
         signal = signal[pad_len:pad_len + mean_signal_length]
 
-    mel_coefficients = mfcc(signal, fs, num_cepstral = mfcc_len)
+    mel_coefficients = mfcc(signal, fs, num_cepstral=mfcc_len)
     #  用 SVM & MLP 模型时要降维数据
     if flatten:
         mel_coefficients = np.ravel(mel_coefficients)
 
     return mel_coefficients
+
 
 def get_feature_svm(file_path: str, mfcc_len: int = 48):
     import librosa
@@ -59,7 +63,7 @@ def get_feature_svm(file_path: str, mfcc_len: int = 48):
     # 对于每一个音频文件提取其mfcc特征
     # y:音频时间序列;
     # n_mfcc:要返回的MFCC数量
-    mfcc_feature = librosa.feature.mfcc(y, sr, n_mfcc = 48)
+    mfcc_feature = librosa.feature.mfcc(y, sr, n_mfcc=48)
     zcr_feature = librosa.feature.zero_crossing_rate(y)
     energy_feature = librosa.feature.rmse(y)
     rms_feature = librosa.feature.rmse(y)
@@ -73,8 +77,10 @@ def get_feature_svm(file_path: str, mfcc_len: int = 48):
     energy_feature = np.array([np.mean(energy_feature)])
     rms_feature = np.array([np.mean(rms_feature)])
 
-    data_feature = np.concatenate((mfcc_feature, zcr_feature, energy_feature, rms_feature))
+    data_feature = np.concatenate((mfcc_feature, zcr_feature, energy_feature,
+                                   rms_feature))
     return data_feature
+
 
 '''
 get_data(): 
@@ -90,7 +96,14 @@ get_data():
     训练集和测试集的MFCC数组和对应的labels数组(numpy.ndarray)
     标签数量(int)
 '''
-def get_data(data_path: str, mfcc_len: int = 39, class_labels: Tuple = ("angry", "fear", "happy", "neutral", "sad", "surprise"), flatten: bool = False, _svm: bool = False):
+
+
+def get_data(data_path: str,
+             mfcc_len: int = 39,
+             class_labels: Tuple = ("angry", "fear", "happy", "neutral", "sad",
+                                    "surprise"),
+             flatten: bool = False,
+             _svm: bool = False):
     from sklearn.model_selection import train_test_split
     data = []
     labels = []
@@ -108,9 +121,11 @@ def get_data(data_path: str, mfcc_len: int = 39, class_labels: Tuple = ("angry",
             filepath = os.getcwd() + '/' + filename
             # 提取该音频的特征向量
             if _svm:
-                feature_vector = get_feature_svm(file_path = filepath, mfcc_len = mfcc_len)
+                feature_vector = get_feature_svm(
+                    file_path=filepath, mfcc_len=mfcc_len)
             else:
-                feature_vector = get_feature(file_path = filepath, mfcc_len = mfcc_len, flatten = flatten)
+                feature_vector = get_feature(
+                    file_path=filepath, mfcc_len=mfcc_len, flatten=flatten)
             data.append(feature_vector)
             labels.append(i)
         sys.stderr.write("Ended reading folder %s\n" % directory)
@@ -118,8 +133,10 @@ def get_data(data_path: str, mfcc_len: int = 39, class_labels: Tuple = ("angry",
     os.chdir(cur_dir)
 
     # 划分训练集和测试集
-    x_train, x_test, y_train, y_test = train_test_split(np.array(data), np.array(labels), test_size = 0.2, random_state = 42)
-    return np.array(x_train), np.array(x_test), np.array(y_train), np.array(y_test)
+    x_train, x_test, y_train, y_test = train_test_split(
+        np.array(data), np.array(labels), test_size=0.2, random_state=42)
+    return np.array(x_train), np.array(x_test), np.array(y_train), np.array(
+        y_test)
 
 
 '''
@@ -133,14 +150,20 @@ load_model_dnn():
 输出:
     model: 加载好的模型
 '''
+
+
 def load_model(model_name: str, load_model: str):
     from sklearn.externals import joblib
 
     from keras.models import model_from_json
     if load_model == 'DNN':
         # 加载json
-        model_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.h5')
-        model_json_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.json')
+        model_path = path.join(
+            path.dirname(path.abspath(__file__)),
+            'Models\\' + model_name + '.h5')
+        model_json_path = path.join(
+            path.dirname(path.abspath(__file__)),
+            'Models\\' + model_name + '.json')
         # model_path = 'Models/' + model_name + '.h5'
         # model_json_path = 'Models/' + model_name + '.json'
 
@@ -153,11 +176,14 @@ def load_model(model_name: str, load_model: str):
         model.load_weights(model_path)
 
     elif load_model == 'ML':
-        model_path = path.join(path.dirname(path.abspath(__file__)), 'Models\\' + model_name + '.m')
+        model_path = path.join(
+            path.dirname(path.abspath(__file__)),
+            'Models\\' + model_name + '.m')
         # model_path = 'Models/' + model_name + '.m'
         model = joblib.load(model_path)
 
     return model
+
 
 '''
 Radar(): 
@@ -168,27 +194,31 @@ Radar():
     class_labels(tuple): 标签
     num_classes(int): 标签数量
 '''
-def Radar(data_prob, class_labels: Tuple, num_classes: int):
 
-    angles = np.linspace(0, 2 * np.pi, num_classes, endpoint = False)
+
+def Radar(data_prob, class_labels: Tuple, num_classes: int):
+    plt.clf()
+
+    angles = np.linspace(0, 2 * np.pi, num_classes, endpoint=False)
     data = np.concatenate((data_prob, [data_prob[0]]))  # 闭合
     angles = np.concatenate((angles, [angles[0]]))  # 闭合
 
-    fig = plt.figure()
+    fig = plt.figure(1)
 
     # polar参数
-    ax = fig.add_subplot(111, polar = True)
+    ax = fig.add_subplot(111, polar=True)
     ax.plot(angles, data, 'bo-', linewidth=2)
     ax.fill(angles, data, facecolor='r', alpha=0.25)
-    ax.set_thetagrids(angles * 180 / np.pi, class_labels)
-    ax.set_title("Emotion Recognition", va = 'bottom')
+    ax.set_thetagrids(
+        angles * 180 / np.pi, class_labels, fontproperties="SimHei")
+    ax.set_title("Emotion Recognition", va='bottom', fontproperties="SimHei")
 
     # 设置雷达图的数据最大值
     ax.set_rlim(0, 1)
 
     ax.grid(True)
     # plt.ion()
-    plt.show()
+    plt.pause(1)
     # plt.pause(4)
     # plt.close()
 
@@ -201,12 +231,14 @@ Waveform():
     file_path(str): 音频路径
 '''
 
+
 def Waveform(file_path: str):
     import librosa
     data, sampling_rate = librosa.load(file_path)
     plt.figure(figsize=(15, 5))
     librosa.display.waveplot(data, sr=sampling_rate)
     plt.show()
+
 
 '''
 Spectrogram(): 
@@ -215,24 +247,26 @@ Spectrogram():
 输入:
     file_path(str): 音频路径
 '''
+
+
 def Spectrogram(file_path: str):
     # sr: 采样率
     # x: 音频数据的numpy数组
-    sr,x = wav.read(file_path)
+    sr, x = wav.read(file_path)
 
     # step: 10ms, window: 30ms
     nstep = int(sr * 0.01)
-    nwin  = int(sr * 0.03)
+    nwin = int(sr * 0.03)
     nfft = nwin
     window = np.hamming(nwin)
 
     nn = range(nwin, len(x), nstep)
-    X = np.zeros( (len(nn), nfft//2) )
+    X = np.zeros((len(nn), nfft // 2))
 
-    for i,n in enumerate(nn):
-        xseg = x[n-nwin:n]
+    for i, n in enumerate(nn):
+        xseg = x[n - nwin:n]
         z = np.fft.fft(window * xseg, nfft)
-        X[i,:] = np.log(np.abs(z[:nfft//2]))
+        X[i, :] = np.log(np.abs(z[:nfft // 2]))
 
     plt.imshow(X.T, interpolation='nearest', origin='lower', aspect='auto')
     plt.show()
