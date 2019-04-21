@@ -61,8 +61,8 @@ class SemanticAnalysis:
 
         classifiers = []
         if self.state == SemanticAnalysis.INITIAL:
-            classifiers.append(self.c_query)
             classifiers.append(S1Success())
+            classifiers.append(self.c_query)
             classifiers.append(self.c_chat)
             classifiers.append(self.c_repeat)
             classifiers.append(self.c_busy)
