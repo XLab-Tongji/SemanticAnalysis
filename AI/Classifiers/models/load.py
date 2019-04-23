@@ -11,7 +11,7 @@ from torchtext.vocab import Vectors
 import os.path as path
 
 def _chinese_tokenizer(sentence):
-    exclusion = ["e", "x", "y"]  # e 叹词  x 非语素词  y 语气词
+    exclusion = ["x", "y"]  # e 叹词  x 非语素词  y 语气词
     return [word for (word, flag) in pseg.cut(sentence) if flag not in exclusion]
 
 def load_data(target, config):
