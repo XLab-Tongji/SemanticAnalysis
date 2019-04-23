@@ -63,7 +63,7 @@ def get_feature_svm(file_path: str, mfcc_len: int = 48):
     # 对于每一个音频文件提取其mfcc特征
     # y:音频时间序列;
     # n_mfcc:要返回的MFCC数量
-    mfcc_feature = librosa.feature.mfcc(y, sr, n_mfcc=48)
+    mfcc_feature = librosa.feature.mfcc(y, sr, n_mfcc=16)
     zcr_feature = librosa.feature.zero_crossing_rate(y)
     energy_feature = librosa.feature.rmse(y)
     rms_feature = librosa.feature.rmse(y)
