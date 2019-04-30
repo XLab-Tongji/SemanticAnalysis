@@ -1,6 +1,6 @@
 # may be a repetition classifier
 from .classifier import Classifier
-from makeVec import  Matcher
+from makeVec import Matcher
 
 class Chatting(Classifier):
     def __init__(self):
@@ -10,7 +10,6 @@ class Chatting(Classifier):
         self.set_to_state2 = ['11','4','12','13','17','20','21','23','24','26','28','29','30','32']
         self.set_to_end = ['34']
         self.matcher = Matcher()
-        self.matcher.make_vec_file()
 
     def get_intention(self):
         self.classified = False

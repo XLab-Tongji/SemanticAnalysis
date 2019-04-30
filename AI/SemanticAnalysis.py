@@ -63,24 +63,24 @@ class SemanticAnalysis:
         if self.state == SemanticAnalysis.INITIAL:
             classifiers.append(self.c_query)
             classifiers.append(self.c_chat)
-            classifiers.append(S1Success())
             classifiers.append(self.c_repeat)
             classifiers.append(self.c_busy)
             classifiers.append(self.c_decline)
+            classifiers.append(S1Success())
             classifiers.append(self.c_unidentified)
         elif self.state == SemanticAnalysis.QUERIED:
             classifiers.append(self.c_chat)
-            classifiers.append(S1Success())
             classifiers.append(self.c_repeat)
             classifiers.append(self.c_busy)
             classifiers.append(self.c_decline)
+            classifiers.append(S1Success())
             classifiers.append(self.c_unidentified)
         elif self.state == SemanticAnalysis.INTRODUCTION:
             classifiers.append(self.c_chat)
-            classifiers.append(S2Success())
             classifiers.append(self.c_repeat)
             classifiers.append(self.c_busy)
             classifiers.append(self.c_decline)
+            classifiers.append(S2Success())
             classifiers.append(self.c_unidentified)
 
         cfg_needed = False
