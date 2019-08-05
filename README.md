@@ -2,7 +2,6 @@
 
 #### For speech recognition
 ```
-
 pip install SpeechRecognition
 
 pip install pyttsx3
@@ -16,7 +15,6 @@ pip install pydub
 
 #### For speech emotion
 ```
-
 pip install librosa
 
 pip install speechpy
@@ -40,3 +38,50 @@ tensorflow, torch, torchtext, warnings, ...
 启动main.py
 
 开启语音功能时建议使用耳机
+
+## 四、测试用例
+引号部分为每轮人机对话中的用户输入部分。四个测试用例分别测试不同的场景。
+
+1.在忙
+
+```
+“你说什么，我没听清”
+
+“我现在不方便 以后再说吧”
+```
+
+2.拒绝
+
+```
+“你们是哪家银行的”
+
+“好呀，你说”
+
+“算了吧，我不感兴趣”
+```
+
+3.接受
+
+```
+“我没太听懂 你说什么活动”
+
+“我要怎么做呢”
+
+“存五万利息多少”
+
+“好，我知道了”
+```
+
+4.检索
+
+```
+“你们公司叫什么”
+
+“你们是不是骗子啊”
+
+“你不会是机器人吧”
+
+“好吧，你继续说”
+
+“可以”
+```
