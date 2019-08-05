@@ -1,7 +1,6 @@
 from AI.TextSpeech import speech_to_text_baidu
 
 def get_input(method):
-    print("---- please say something ----")
     if method == "voice":
         return _input_from_voice()
     elif method == "command":

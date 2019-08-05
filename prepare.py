@@ -4,12 +4,12 @@ warnings.filterwarnings("ignore", category=FutureWarning)
 from config import Config
 config = Config()
 if config.EMOTION_RECOGNItION:
-    import os
-    import sys
-    stderr = sys.stderr
-    sys.stderr = open(os.devnull, 'w')
+#     import os
+#     import sys
+#     stderr = sys.stderr
+#     sys.stderr = open(os.devnull, 'w')
     import keras
-    sys.stderr = stderr
+#     sys.stderr = stderr
 import jieba
 import logging
 jieba.setLogLevel(logging.INFO)

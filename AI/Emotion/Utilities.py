@@ -160,10 +160,10 @@ def load_model(model_name: str, load_model: str):
         # 加载json
         model_path = path.join(
             path.dirname(path.abspath(__file__)),
-            'Models\\' + model_name + '.h5')
+            'Models', model_name + '.h5')
         model_json_path = path.join(
             path.dirname(path.abspath(__file__)),
-            'Models\\' + model_name + '.json')
+            'Models', model_name + '.json')
         # model_path = 'Models/' + model_name + '.h5'
         # model_json_path = 'Models/' + model_name + '.json'
 
@@ -178,7 +178,7 @@ def load_model(model_name: str, load_model: str):
     elif load_model == 'ML':
         model_path = path.join(
             path.dirname(path.abspath(__file__)),
-            'Models\\' + model_name + '.m')
+            'Models', model_name + '.m')
         # model_path = 'Models/' + model_name + '.m'
         model = joblib.load(model_path)
 

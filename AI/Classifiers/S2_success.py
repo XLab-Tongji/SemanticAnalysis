@@ -4,7 +4,13 @@ from .classifier import Classifier
 class S2Success(Classifier):
     def __init__(self):
         self.classified = False
-        self.words_list = ['好', '嗯', '可以']
+        self.words_list = ['嗯',
+                           '行',
+                           '有',
+                           '要',
+                           '需要',
+                           '好',
+                           '可以']
         self.next_state = self.END
 
     # cfg_needed, intention, sub-intention
