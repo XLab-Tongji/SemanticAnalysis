@@ -1,6 +1,7 @@
 ## 一、依赖安装
+以下依赖除特别指明，均安装默认版本：
 
-#### For speech recognition
+#### 1. For speech recognition
 ```
 pip install SpeechRecognition
 
@@ -13,16 +14,18 @@ pip install pyaudio
 pip install pydub
 ```
 
-#### For speech emotion
+#### 2. For speech emotion
 ```
 pip install librosa
 
 pip install speechpy
 ```
-#### Others
-tensorflow, torch, torchtext, warnings, ...
+#### 3. Others
+tensorflow（1.13.1）, torch（0.4.1）, torchtext（0.3.1）, warnings, ...
 
 根据依赖缺失提示安装其余依赖
+
+torch安装方法参见官网安装教程： http://torch.ch/docs/getting-started.html#_
 
 ## 二、配置信息
 配置信息写在config.py中
